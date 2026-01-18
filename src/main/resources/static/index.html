@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ELI5+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Reset and font */
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    transition: background 0.3s, color 0.3s;
+    color: #111827;
+}
+
+body.dark {
+    background: #111827;
+    color: #f3f4f6;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark .container {
+    background: #1f2937;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #4f46e5;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    resize: vertical;
+    background: #ffffff;
+    color: #111827;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark textarea {
+    background: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+}
+
+.levels {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.levels button {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    background: #e5e7eb;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.levels button.active {
+    background: #4f46e5;
+    color: white;
+}
+
+.explain-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #4f46e5;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+
+.explain-btn:hover {
+    background: #4338ca;
+}
+
+#output {
+    min-height: 100px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    white-space: pre-wrap;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+body.dark #output {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+}
+
+.level-description {
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #eef2ff;
+    display: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark .level-description {
+    background: #374151;
+    color: #f3f4f6;
+}
+
+.level-description p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h1>ELI5+</h1>
+        <button onclick="toggleDarkMode()" style="padding:6px 12px; border:none; border-radius:8px; cursor:pointer; background:#4f46e5; color:white;">🌙 Dark Mode</button>
+    </div>
+
+    <textarea id="question" placeholder="Ask your question..."></textarea>
+
+    <div class="levels">
+        <button onclick="selectLevel(1)">1</button>
+        <button onclick="selectLevel(2)">2</button>
+        <button onclick="selectLevel(3)">3</button>
+        <button onclick="selectLevel(4)">4</button>
+        <button onclick="selectLevel(5)">5</button>
+        <button onclick="selectLevel(6)">6</button>
+    </div>
+
+    <!-- Explanation boxes for each level -->
+    <div id="level-desc-1" class="level-description">
+        <p>Level 1: Super simple, explained like you're 5.</p>
+    </div>
+    <div id="level-desc-2" class="level-description">
+        <p>Level 2: Simple and friendly explanation.</p>
+    </div>
+    <div id="level-desc-3" class="level-description">
+        <p>Level 3: Standard explanation with a bit more detail.</p>
+    </div>
+    <div id="level-desc-4" class="level-description">
+        <p>Level 4: Detailed explanation with examples.</p>
+    </div>
+    <div id="level-desc-5" class="level-description">
+        <p>Level 5: Advanced explanation with in-depth reasoning.</p>
+    </div>
+    <div id="level-desc-6" class="level-description">
+        <p>Level 6: Expert-level explanation, technical and thorough.</p>
+    </div>
+
+    <button class="explain-btn" onclick="explainWithLoading()">Explain</button>
+
+    <pre id="output">Your explanation will appear here…</pre>
+</div>
+
+<script>
+// Toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+}
+
+// Highlight selected level and show description
+function selectLevel(l) {
+    setLevel(l); // your script.js logic
+
+    document.querySelectorAll(".levels button").forEach((btn,i)=>{
+        btn.classList.toggle("active", i === l-1);
+    });
+
+    document.querySelectorAll(".level-description").forEach((desc,i)=>{
+        desc.style.display = (i === l-1) ? "block" : "none";
+    });
+}
+
+// Loading wrapper (no emojis)
+function explainWithLoading() {
+    const output = document.getElementById("output");
+    output.innerHTML = "Thinking...";
+    explain(); // call real AI function
+}
+
+// Highlight level 1 on load
+window.addEventListener("DOMContentLoaded", ()=> selectLevel(1));
+</script>
+
+<!-- Your existing AI logic -->
+<script src="script.js"></script>
+</body>
+</html>
