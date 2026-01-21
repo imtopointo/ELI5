@@ -28,11 +28,11 @@ public class OpenAIClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
 
-        // ---- BODY (CORRECT FORMAT) ----
+        // ---- BODY
         Map<String, Object> body = new HashMap<>();
         body.put("model", "gpt-4.1-mini");
 
-        // OpenAI Responses API expects input as an ARRAY
+        // OpenAI Responses API 
         body.put("input", new Object[] {
             Map.of(
                 "role", "user",
@@ -72,3 +72,4 @@ public class OpenAIClient {
         }
     }
 }
+
