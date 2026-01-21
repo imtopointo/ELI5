@@ -194,7 +194,7 @@ function toggleDarkMode() {
 
 // Highlight selected level and show description
 function selectLevel(l) {
-    setLevel(l); // your script.js logic
+    setLevel(l); //script.js logic
 
     document.querySelectorAll(".levels button").forEach((btn,i)=>{
         btn.classList.toggle("active", i === l-1);
@@ -205,7 +205,7 @@ function selectLevel(l) {
     });
 }
 
-// Loading wrapper (no emojis)
+// Loading wrapper
 function explainWithLoading() {
     const output = document.getElementById("output");
     output.innerHTML = "Thinking...";
@@ -216,7 +216,8 @@ function explainWithLoading() {
 window.addEventListener("DOMContentLoaded", ()=> selectLevel(1));
 </script>
 
-<!-- Your existing AI logic -->
+<!-- AI logic -->
 <script src="script.js"></script>
 </body>
 </html>
+
